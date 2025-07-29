@@ -218,12 +218,30 @@ const HomePage = () => {
 
           {/* Search Bar - Hidden on mobile */}
           <div className="hidden md:flex flex-1 mx-6 relative">
-            <Input
-              type="text"
-              placeholder="Search products, brands, categories..."
-              className="w-full pr-10"
-            />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const query = formData.get("search") as string;
+                if (query.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+                }
+              }}
+              className="w-full relative"
+            >
+              <Input
+                name="search"
+                type="text"
+                placeholder="Search products, brands, categories..."
+                className="w-full pr-10"
+              />
+              <button
+                type="submit"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+              >
+                <Search className="h-4 w-4" />
+              </button>
+            </form>
           </div>
 
           {/* Navigation Links */}
@@ -276,14 +294,30 @@ const HomePage = () => {
 
         {/* Mobile Search - Visible only on mobile */}
         <div className="md:hidden px-4 pb-4">
-          <div className="relative">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const query = formData.get("search") as string;
+              if (query.trim()) {
+                window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+              }
+            }}
+            className="relative"
+          >
             <Input
+              name="search"
               type="text"
               placeholder="Search products..."
               className="w-full pr-10"
             />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          </div>
+            <button
+              type="submit"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
         </div>
       </header>
 
